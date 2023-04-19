@@ -22,7 +22,7 @@
     "@angular/router": "^15.2.0",
     "chart.js": "^3.3.2",
     "core-js": "^2.6.12",
-    "primeflex": "^3.2.1",
+    "primeflex": "^3.3.0",
     "primeicons": "6.0.1",
     "primeng": "15.2.0",
     "prismjs": "1.9.0",
