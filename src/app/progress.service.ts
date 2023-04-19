@@ -1,9 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ProgressService {
+  constructor() {}
 
-  constructor() { }
+  getProgress(): number {
+    return Math.floor(Math.random() * 10);
+  }
 }
