@@ -13,14 +13,20 @@ export class ProgressService {
   setType(type: string) {
     this._impl = this.impl_ramdon_30;
     console.log("TODO set type to " + type);
-    if (type == "random10") {
-      this._impl = this.impl_ramdon_10;
-    } else if (type == "random30") {
-      this._impl = this.impl_ramdon_30;
-    } else if (type == "random50") {
-      this._impl = this.impl_ramdon_50;
-    } else if (type == "random100") {
-      this._impl = this.impl_ramdon_100;
+
+    switch (type) {
+      case "random10":
+        this._impl = this.impl_ramdon_10;
+        break;
+      case "random30":
+        this._impl = this.impl_ramdon_30;
+        break;
+      case "random50":
+        this._impl = this.impl_ramdon_50;
+        break;
+      case "random100":
+        this._impl = this.impl_ramdon_100;
+        break;
     }
   }
 
