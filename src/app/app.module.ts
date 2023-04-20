@@ -3,10 +3,11 @@ import { NgModule } from "@angular/core";
 import { SharedModule } from "./shared/shared.module";
 
 import { AppComponent } from "./app.component";
-import { PrimengProgressBarComponent } from "./primeng-progress-bar/primeng-progress-bar.component";
-import { DemoNgflexComponent } from "./demo-ngflex/demo-ngflex.component";
-import { DemoPrimengButtonComponent } from "./demo-primeng-button/demo-primeng-button.component";
-import { DemoPrimengProgressBarComponent } from "./demo-primeng-progress-bar/demo-primeng-progress-bar.component";
+import { PrimengProgressBarComponent } from "./primeng/progress-bar/progress-bar.component";
+import { DemoNgflexComponent } from "./demo/demo-ngflex/demo-ngflex.component";
+import { DemoPrimengButtonComponent } from "./demo/demo-primeng-button/demo-primeng-button.component";
+import { DemoPrimengProgressBarComponent } from "./demo/demo-primeng-progress-bar/demo-primeng-progress-bar.component";
+import { DemoComponent } from './demo/demo.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { DemoPrimengProgressBarComponent } from "./demo-primeng-progress-bar/dem
     DemoNgflexComponent,
     DemoPrimengButtonComponent,
     DemoPrimengProgressBarComponent,
+    DemoComponent,
   ],
   imports: [BrowserModule, SharedModule],
   providers: [],

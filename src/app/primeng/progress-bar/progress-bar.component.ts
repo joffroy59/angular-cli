@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { ProgressService } from "../services/progress.service";
+import { ProgressService } from "../../services/progress.service";
 
 @Component({
   selector: "app-primeng-progress-bar",
-  templateUrl: "./primeng-progress-bar.component.html",
-  styleUrls: ["./primeng-progress-bar.component.css"],
+  templateUrl: "./progress-bar.component.html",
+  styleUrls: ["./progress-bar.component.css"],
 })
 export class PrimengProgressBarComponent implements OnInit {
   constructor(private progressService: ProgressService) {}
