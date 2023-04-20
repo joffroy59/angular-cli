@@ -71,6 +71,9 @@ export class ProgressService {
   }
 
   impl_bigNumber(): void {
-    this.impl_ramdon_x(100);
+    console.log("impl_bigNumber");
+    let value = Math.floor(Math.random() * 100) + 1;
+    this.info = (value * 10).toString();
+    this.value = value;
   }
 }
