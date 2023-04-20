@@ -6,13 +6,19 @@ import { Injectable } from "@angular/core";
 export class ProgressService {
   constructor() {}
 
-  _impl;
+  _impl: any;
 
-  setType(type) {
+  setType(type: string) {
     this._impl = this.impl_ramdon_30;
     console.log("TODO set type to " + type);
-    if (type == "random") {
+    if (type == "random10") {
       this._impl = this.impl_ramdon_10;
+    } else if (type == "random30") {
+      this._impl = this.impl_ramdon_30;
+    } else if (type == "random50") {
+      this._impl = this.impl_ramdon_50;
+    } else if (type == "random100") {
+      this._impl = this.impl_ramdon_100;
     }
   }
 
