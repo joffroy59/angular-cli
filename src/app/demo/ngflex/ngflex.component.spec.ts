@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DemoNgflexComponent } from "./demo-ngflex.component";
+import { DemoNgflexComponent } from "./ngflex.component";
 
 describe("DemoNgflexComponent", () => {
   let component: DemoNgflexComponent;
