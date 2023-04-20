@@ -7,7 +7,9 @@ import { ProgressService } from "../../services/progress.service";
   styleUrls: ["./progress-bar.component.css"],
 })
 export class PrimengProgressBarComponent implements OnInit {
-  constructor(private progressService: ProgressService) {}
+  constructor() {}
+
+  progressService: ProgressService;
 
   @Input() title1: string = "";
   @Input() title2: string = "";
@@ -31,6 +33,7 @@ export class PrimengProgressBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.progressService = new ProgressService();
     this.progressService.setType(this.serviceType);
 
     let interval = setInterval(() => {
