@@ -20,6 +20,7 @@ export class PrimengProgressBarComponent implements OnInit {
   value: number = 0;
   full: boolean = false;
   info: string = "";
+  counter: number = 0;
 
   getProgress(): number {
     this.progressService.tick();
@@ -29,6 +30,7 @@ export class PrimengProgressBarComponent implements OnInit {
 
   setInfo(): void {
     this.info = this.progressService.geInfo();
+    this.counter = this.progressService.getCounter();
   }
 
   toString(): string {
@@ -52,6 +54,7 @@ export class PrimengProgressBarComponent implements OnInit {
       } else if (this.value == 100) {
         this.progressService.reset();
         this.info = this.progressService.geInfo();
+        this.counter = this.progressService.getCounter();
         this.value = 0;
         this.full = false;
       }

@@ -1,20 +1,30 @@
 import { Injectable } from "@angular/core";
 
+interface Element {
+  info: string;
+  value: number;
+  counter: number;
+}
+
 @Injectable({
   providedIn: "root",
 })
 export class ProgressService {
-  constructor() {}
+  constructor() {
+    this.element = { info: "", value: 0, counter: this._bigNumberStart };
+  }
 
   _impl: any;
-  info: string = "";
-  value: number = 0;
+  element: Element;
+
+  serviceType: string = "random30";
 
   setType(type: string) {
+    this.serviceType = type;
     this._impl = this.impl_ramdon_30;
-    console.log("TODO set type to " + type);
+    console.log("TODO set type to " + this.serviceType);
 
-    switch (type) {
+    switch (this.serviceType) {
       case "random10":
         this._impl = this.impl_ramdon_10;
         break;
@@ -34,7 +44,7 @@ export class ProgressService {
   }
 
   getProgress(): number {
-    return this.value;
+    return this.element.value;
   }
 
   tick(): void {
@@ -42,19 +52,25 @@ export class ProgressService {
   }
 
   geInfo(): string {
-    return this.info;
+    return this.element.info;
+  }
+
+  getCounter(): number {
+    return this.element.counter;
   }
 
   reset() {
-    this.value = 0;
-    this.info = "0";
+    if (this.serviceType == "bigNumber")
+      this.element.info = this._bigNumberStart.toString();
+    else this.element.info = "0";
+    this.element.value = 0;
   }
 
   impl_ramdon_x(factor: number): void {
     console.log("impl_ramdon_" + factor);
     let value = Math.floor(Math.random() * factor) + 1;
-    this.info = value.toString();
-    this.value = value;
+
+    this.element = { info: value.toString(), value: value, counter: value };
   }
 
   impl_ramdon_10(): void {
@@ -70,10 +86,18 @@ export class ProgressService {
     this.impl_ramdon_x(100);
   }
 
+  //_bigNumberStart: number = 6791;
+  _bigNumberStart: number = 1000;
   impl_bigNumber(): void {
     console.log("impl_bigNumber");
-    let value = Math.floor(Math.random() * 100) + 1;
-    this.info = (value * 10).toString();
-    this.value = value;
+    let rand = Math.floor(Math.random());
+    let value = rand * 500 + 1;
+
+    let count = this.element.counter;
+    this.element = {
+      info: value.toString(),
+      value: value,
+      counter: count - value,
+    };
   }
 }
