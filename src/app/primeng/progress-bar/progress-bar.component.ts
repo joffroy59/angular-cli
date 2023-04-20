@@ -19,9 +19,16 @@ export class PrimengProgressBarComponent implements OnInit {
 
   value: number = 0;
   full: boolean = false;
+  info: string = "";
 
   getProgress(): number {
+    this.progressService.tick();
+    this.setInfo();
     return this.progressService.getProgress();
+  }
+
+  setInfo(): void {
+    this.info = this.progressService.geInfo();
   }
 
   toString(): string {
@@ -37,12 +44,14 @@ export class PrimengProgressBarComponent implements OnInit {
     this.progressService.setType(this.serviceType);
 
     let interval = setInterval(() => {
-      if (!this.full) this.value = this.value + this.getProgress() + 1;
+      if (!this.full) this.value = this.value + this.getProgress();
       console.log(this.toString() + "=" + this.value);
       if (this.value > 100) {
         this.value = 100;
         this.full = true;
       } else if (this.value == 100) {
+        this.progressService.reset();
+        this.info = this.progressService.geInfo();
         this.value = 0;
         this.full = false;
       }

@@ -7,6 +7,8 @@ export class ProgressService {
   constructor() {}
 
   _impl: any;
+  info: string = "";
+  value: number = 0;
 
   setType(type: string) {
     this._impl = this.impl_ramdon_30;
@@ -23,23 +25,39 @@ export class ProgressService {
   }
 
   getProgress(): number {
-    return this._impl();
+    return this.value;
   }
 
-  impl_ramdon_10(): number {
-    console.log("impl_ramdon_10");
-    return Math.floor(Math.random() * 10);
+  tick(): void {
+    this._impl();
   }
-  impl_ramdon_30(): number {
-    console.log("impl_ramdon_30");
-    return Math.floor(Math.random() * 30);
+
+  geInfo(): string {
+    return this.info;
   }
-  impl_ramdon_50(): number {
-    console.log("impl_ramdon_50");
-    return Math.floor(Math.random() * 50);
+
+  reset() {
+    this.value = 0;
+    this.info = "0";
   }
-  impl_ramdon_100(): number {
-    console.log("impl_ramdon_100");
-    return Math.floor(Math.random() * 100);
+
+  impl_ramdon_x(factor: number): void {
+    console.log("impl_ramdon_" + factor);
+    let value = Math.floor(Math.random() * factor) + 1;
+    this.info = value.toString();
+    this.value = value;
+  }
+
+  impl_ramdon_10(): void {
+    this.impl_ramdon_x(10);
+  }
+  impl_ramdon_30(): void {
+    this.impl_ramdon_x(30);
+  }
+  impl_ramdon_50(): void {
+    this.impl_ramdon_x(50);
+  }
+  impl_ramdon_100(): void {
+    this.impl_ramdon_x(100);
   }
 }
