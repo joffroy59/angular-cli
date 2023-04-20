@@ -13,7 +13,10 @@ export class PrimengProgressBarComponent implements OnInit {
   @Input() title2: string = "";
   @Input() title3: string = "";
 
+  @Input() serviceType: string = "";
+
   value: number = 0;
+  full: boolean = false;
 
   getProgress(): number {
     return this.progressService.getProgress();
@@ -28,11 +31,17 @@ export class PrimengProgressBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.progressService.setType(this.serviceType);
+
     let interval = setInterval(() => {
-      this.value = this.value + this.getProgress() + 1;
+      if (!this.full) this.value = this.value + this.getProgress() + 1;
       console.log(this.toString() + "=" + this.value);
-      if (this.value >= 100) {
+      if (this.value > 100) {
+        this.value = 100;
+        this.full = true;
+      } else if (this.value == 100) {
         this.value = 0;
+        this.full = false;
       }
     }, 2000);
   }
