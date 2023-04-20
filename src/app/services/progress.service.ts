@@ -27,6 +27,9 @@ export class ProgressService {
       case "random100":
         this._impl = this.impl_ramdon_100;
         break;
+      case "bigNumber":
+        this._impl = this.impl_bigNumber;
+        break;
     }
   }
 
@@ -64,6 +67,10 @@ export class ProgressService {
     this.impl_ramdon_x(50);
   }
   impl_ramdon_100(): void {
+    this.impl_ramdon_x(100);
+  }
+
+  impl_bigNumber(): void {
     this.impl_ramdon_x(100);
   }
 }
