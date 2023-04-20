@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ProgressService } from "./progress.service";
+import { ProgressService } from "./services/progress.service";
 
 @Component({
   selector: "app-root",
