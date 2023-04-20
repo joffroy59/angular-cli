@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { ProgressService } from "../services/progress.service";
 
 @Component({
@@ -8,6 +8,10 @@ import { ProgressService } from "../services/progress.service";
 })
 export class ProgressBarDemoComponent implements OnInit {
   constructor(private progressService: ProgressService) {}
+
+  @Input() title1: string;
+  @Input() title2: string;
+  @Input() title3: string;
 
   title = "Angular CLI Template";
   value: number = 0;
