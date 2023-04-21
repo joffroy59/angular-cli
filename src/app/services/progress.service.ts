@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Info } from "./info";
 import { BigNumberImpl } from "./big-number-impl";
+import { IProgress } from "./i-progress";
+import { RandomImpl } from "./random-impl";
 
 @Injectable({
   providedIn: "root",
@@ -20,6 +22,11 @@ export class ProgressService {
   info: Info;
 
   bigNumberImpl: BigNumberImpl;
+
+  ramdon10Impl: IProgress = new RandomImpl(10);
+  ramdon30Impl: IProgress = new RandomImpl(10);
+  ramdon50Impl: IProgress = new RandomImpl(10);
+  ramdon100Impl: IProgress = new RandomImpl(10);
 
   serviceType: string = "random30";
 
@@ -75,29 +82,17 @@ export class ProgressService {
     this.info.deltaSum = 0;
   }
 
-  impl_ramdon_x(factor: number): void {
-    console.log("impl_ramdon_" + factor);
-    let value = Math.floor(Math.random() * factor) + 1;
-    let deltaSumOld = this.info.deltaSum;
-    this.info = {
-      info: value.toString(),
-      value: value,
-      counter: value,
-      deltaSum: deltaSumOld + value,
-    };
-  }
-
   impl_ramdon_10(): void {
-    this.impl_ramdon_x(10);
+    this.info = this.ramdon10Impl.next(this.info);
   }
   impl_ramdon_30(): void {
-    this.impl_ramdon_x(30);
+    this.info = this.ramdon30Impl.next(this.info);
   }
   impl_ramdon_50(): void {
-    this.impl_ramdon_x(50);
+    this.info = this.ramdon50Impl.next(this.info);
   }
   impl_ramdon_100(): void {
-    this.impl_ramdon_x(100);
+    this.info = this.ramdon100Impl.next(this.info);
   }
 
   impl_bigNumber(): void {

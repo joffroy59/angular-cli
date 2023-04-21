@@ -1,6 +1,7 @@
 import { Info } from "./info";
+import { IProgress } from "./i-progress";
 
-export class BigNumberImpl {
+export class BigNumberImpl implements IProgress {
   //_bigNumberStart: number = 6791;
   _bigNumberStart: number = 1200;
 
