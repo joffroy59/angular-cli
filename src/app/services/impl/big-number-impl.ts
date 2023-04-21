@@ -1,11 +1,11 @@
-import { Info } from "../info";
+import { IMsg } from "../i-msg";
 import { IProgress } from "../i-progress";
 
 export class BigNumberImpl implements IProgress {
   //_bigNumberStart: number = 6791;
   _bigNumberStart: number = 1200;
 
-  getNextCounter(info: Info, delta: number): number {
+  getNextCounter(info: IMsg, delta: number): number {
     this.log(info);
     console.log("delta:" + delta);
 
@@ -21,7 +21,7 @@ export class BigNumberImpl implements IProgress {
     return this._bigNumberStart;
   }
 
-  next(info: Info): Info {
+  next(info: IMsg): IMsg {
     console.log("impl_bigNumber");
     let delta = Math.floor(Math.random() * 30) + 1;
     let deltaSumOld = info.deltaSum;
@@ -35,7 +35,7 @@ export class BigNumberImpl implements IProgress {
     };
   }
 
-  reset(info: Info) {
+  reset(info: IMsg) {
     console.log("reset");
     info.value = 0;
     info.info = "0";
@@ -43,7 +43,7 @@ export class BigNumberImpl implements IProgress {
     info.deltaSum = 0;
   }
 
-  log(info: Info) {
+  log(info: IMsg) {
     console.log("val=" + info.value);
     console.log("info=" + info.info);
     console.log("counter=" + info.counter);

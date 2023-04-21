@@ -1,4 +1,4 @@
-import { Info } from "../info";
+import { IMsg } from "../i-msg";
 
 export class RandomImpl {
   factor: number;
@@ -6,7 +6,7 @@ export class RandomImpl {
     this.factor = factor;
   }
 
-  next(info: Info): Info {
+  next(info: IMsg): IMsg {
     console.log("impl_ramdon_" + this.factor);
     let value = Math.floor(Math.random() * this.factor) + 1;
     let deltaSumOld = info.deltaSum;
@@ -18,7 +18,7 @@ export class RandomImpl {
     };
   }
 
-  reset(info: Info) {
+  reset(info: IMsg) {
     console.log("reset");
     info.value = 0;
     info.info = "0";

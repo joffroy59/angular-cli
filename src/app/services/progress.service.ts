@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Info } from "./info";
+import { IMsg } from "./i-msg";
 import { IProgress } from "./i-progress";
 import { BigNumberImpl } from "./impl/big-number-impl";
 import { RandomImpl } from "./impl/random-impl";
@@ -9,8 +9,7 @@ import { RandomImpl } from "./impl/random-impl";
 })
 export class ProgressService {
   constructor() {
-    this.bigNumberImpl = new BigNumberImpl();
-    this.info = {
+    this.msg = {
       value: 0,
       info: "",
       counter: 0,
@@ -18,13 +17,7 @@ export class ProgressService {
     };
   }
 
-  info: Info;
-
-  bigNumberImpl: BigNumberImpl;
-  ramdon10Impl: IProgress = new RandomImpl(10);
-  ramdon30Impl: IProgress = new RandomImpl(30);
-  ramdon50Impl: IProgress = new RandomImpl(50);
-  ramdon100Impl: IProgress = new RandomImpl(100);
+  msg: IMsg;
 
   progressImpl: IProgress;
 
@@ -32,45 +25,46 @@ export class ProgressService {
 
   setType(type: string) {
     this.serviceType = type;
-    this.progressImpl = this.ramdon30Impl;
     console.log("Set type to " + this.serviceType);
-
     switch (this.serviceType) {
       case "random10":
-        this.progressImpl = this.ramdon10Impl;
+        this.progressImpl = new RandomImpl(10);
         break;
       case "random30":
-        this.progressImpl = this.ramdon30Impl;
+        this.progressImpl = new RandomImpl(30);
         break;
       case "random50":
-        this.progressImpl = this.ramdon50Impl;
+        this.progressImpl = new RandomImpl(50);
         break;
       case "random100":
-        this.progressImpl = this.ramdon100Impl;
+        this.progressImpl = new RandomImpl(100);
         break;
       case "bigNumber":
-        this.progressImpl = this.bigNumberImpl;
+        this.progressImpl = new BigNumberImpl();
+        break;
+      default:
+        this.progressImpl = new RandomImpl(30);
         break;
     }
   }
 
   getProgress(): number {
-    return this.info.value;
+    return this.msg.value;
   }
 
   tick(): void {
-    this.info = this.progressImpl.next(this.info);
+    this.msg = this.progressImpl.next(this.msg);
   }
 
   geInfo(): string {
-    return this.info.info;
+    return this.msg.info;
   }
 
   getCounter(): number {
-    return this.info.counter;
+    return this.msg.counter;
   }
 
   reset() {
-    this.progressImpl.reset(this.info);
+    this.progressImpl.reset(this.msg);
   }
 }

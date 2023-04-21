@@ -1,4 +1,4 @@
-export interface Info {
+export interface IMsg {
   value: number;
   info: string;
   counter: number;

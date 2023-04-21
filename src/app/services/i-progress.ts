@@ -1,6 +1,6 @@
-import { Info } from "./info";
+import { IMsg } from "./i-msg";
 
 export interface IProgress {
-  next(info: Info): Info;
-  reset(info: Info);
+  next(info: IMsg): IMsg;
+  reset(info: IMsg);
 }
