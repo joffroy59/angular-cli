@@ -106,17 +106,7 @@ export class ProgressService {
   }
 
   impl_bigNumber(): void {
-    console.log("impl_bigNumber");
-    let delta = Math.floor(Math.random() * 30) + 1;
-    let deltaSumOld = this.element.deltaSum;
-
-    let counter = this.bigNumberImpl.getNextCounter(this.element, delta);
-    this.element = {
-      value: delta,
-      info: delta.toString(),
-      counter: counter,
-      deltaSum: deltaSumOld + delta,
-    };
+    this.element = this.bigNumberImpl.next(this.element);
   }
 
   log(element: Element) {
