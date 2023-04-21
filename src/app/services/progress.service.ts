@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Info } from "./info";
-import { BigNumberImpl } from "./big-number-impl";
 import { IProgress } from "./i-progress";
-import { RandomImpl } from "./random-impl";
+import { BigNumberImpl } from "./impl/big-number-impl";
+import { RandomImpl } from "./impl/random-impl";
 
 @Injectable({
   providedIn: "root",
@@ -71,14 +71,6 @@ export class ProgressService {
   }
 
   reset() {
-    console.log("reset");
-    this.info.value = 0;
-    this.info.info = "0";
-    if (this.serviceType == "bigNumber") {
-      this.info.counter = this.bigNumberImpl.getResetCounter();
-    } else {
-      this.info.counter = 0;
-    }
-    this.info.deltaSum = 0;
+    this.progressImpl.reset(this.info);
   }
 }

@@ -1,5 +1,5 @@
-import { Info } from "./info";
-import { IProgress } from "./i-progress";
+import { Info } from "../info";
+import { IProgress } from "../i-progress";
 
 export class BigNumberImpl implements IProgress {
   //_bigNumberStart: number = 6791;
@@ -33,6 +33,14 @@ export class BigNumberImpl implements IProgress {
       counter: counter,
       deltaSum: deltaSumOld + delta,
     };
+  }
+
+  reset(info: Info) {
+    console.log("reset");
+    info.value = 0;
+    info.info = "0";
+    info.counter = this.getResetCounter();
+    info.deltaSum = 0;
   }
 
   log(info: Info) {
