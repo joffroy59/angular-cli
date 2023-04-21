@@ -16,7 +16,7 @@ export class ProgressService {
     this.element = {
       value: 0,
       info: "",
-      counter: this.bigNumberImpl.getResetCounter(),
+      counter: 0,
       deltaSum: 0,
     };
   }
