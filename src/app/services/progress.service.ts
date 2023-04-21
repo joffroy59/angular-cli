@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 
 interface Element {
-  info: string;
   value: number;
+  info: string;
   counter: number;
+  deltaSum: number;
 }
 
 @Injectable({
@@ -11,7 +12,12 @@ interface Element {
 })
 export class ProgressService {
   constructor() {
-    this.element = { info: "", value: 0, counter: this._bigNumberStart };
+    this.element = {
+      value: 0,
+      info: "",
+      counter: this._bigNumberStart,
+      deltaSum: 0,
+    };
   }
 
   _impl: any;
@@ -22,7 +28,7 @@ export class ProgressService {
   setType(type: string) {
     this.serviceType = type;
     this._impl = this.impl_ramdon_30;
-    console.log("TODO set type to " + this.serviceType);
+    console.log("Set type to " + this.serviceType);
 
     switch (this.serviceType) {
       case "random10":
@@ -60,17 +66,26 @@ export class ProgressService {
   }
 
   reset() {
-    if (this.serviceType == "bigNumber")
-      this.element.info = this._bigNumberStart.toString();
-    else this.element.info = "0";
+    console.log("reset");
     this.element.value = 0;
+    this.element.info = "0";
+    if (this.serviceType == "bigNumber") {
+      this.element.counter = this._bigNumberStart;
+    } else {
+      this.element.counter = 0;
+    }
   }
 
   impl_ramdon_x(factor: number): void {
     console.log("impl_ramdon_" + factor);
     let value = Math.floor(Math.random() * factor) + 1;
-
-    this.element = { info: value.toString(), value: value, counter: value };
+    let deltaSumOld = this.element.deltaSum;
+    this.element = {
+      info: value.toString(),
+      value: value,
+      counter: value,
+      deltaSum: deltaSumOld + value,
+    };
   }
 
   impl_ramdon_10(): void {
@@ -87,17 +102,55 @@ export class ProgressService {
   }
 
   //_bigNumberStart: number = 6791;
-  _bigNumberStart: number = 1000;
+  _bigNumberStart: number = 1200;
   impl_bigNumber(): void {
     console.log("impl_bigNumber");
-    let rand = Math.floor(Math.random());
-    let value = rand * 500 + 1;
+    let delta = Math.floor(Math.random() * 30) + 1;
+    let deltaSumOld = this.element.deltaSum;
 
-    let count = this.element.counter;
     this.element = {
-      info: value.toString(),
-      value: value,
-      counter: count - value,
+      value: delta,
+      info: delta.toString(),
+      counter: this.getNextCounter(delta),
+      deltaSum: deltaSumOld + delta,
     };
+  }
+
+  getNextCounter(delta: number): number {
+    this.log(this.element);
+    console.log("delta:" + delta);
+
+    let tmp = this.element.deltaSum + delta;
+    console.log("this.element.deltaSum + delta=" + tmp);
+
+    console.log(
+      "Math.min(this.element.deltaSum + delta, 100)" + ":" + Math.min(tmp, 100)
+    );
+    console.log(
+      "Math.min(this.element.deltaSum + delta, 100)/100" +
+        ":" +
+        Math.min(tmp, 100) / 100
+    );
+    console.log(
+      "(1 - (Math.min(this.element.deltaSum + delta, 100)/100))" +
+        ":" +
+        (1 - Math.min(tmp, 100) / 100)
+    );
+    console.log(
+      "(1 - (Math.min(this.element.deltaSum + delta, 100)/100))  * this._bigNumberStart" +
+        ":" +
+        (1 - Math.min(tmp, 100) / 100) * this._bigNumberStart
+    );
+    let result = (1 - Math.min(tmp, 100) / 100) * this._bigNumberStart;
+    console.log("result=" + result);
+
+    return result;
+  }
+
+  log(element: Element) {
+    console.log("val=" + this.element.value);
+    console.log("info=" + this.element.info);
+    console.log("counter=" + this.element.counter);
+    console.log("deltaSum=" + this.element.deltaSum);
   }
 }
