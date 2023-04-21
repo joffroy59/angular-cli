@@ -103,11 +103,4 @@ export class ProgressService {
   impl_bigNumber(): void {
     this.info = this.bigNumberImpl.next(this.info);
   }
-
-  log(info: Info) {
-    console.log("val=" + info.value);
-    console.log("info=" + info.info);
-    console.log("counter=" + info.counter);
-    console.log("deltaSum=" + info.deltaSum);
-  }
 }
