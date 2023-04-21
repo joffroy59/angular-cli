@@ -77,6 +77,7 @@ export class ProgressService {
     } else {
       this.element.counter = 0;
     }
+    this.element.deltaSum = 0;
   }
 
   impl_ramdon_x(factor: number): void {
@@ -105,7 +106,17 @@ export class ProgressService {
   }
 
   impl_bigNumber(): void {
-    this.element = this.bigNumberImpl.next(this.element);
+    console.log("impl_bigNumber");
+    let delta = Math.floor(Math.random() * 30) + 1;
+    let deltaSumOld = this.element.deltaSum;
+
+    let counter = this.bigNumberImpl.getNextCounter(this.element, delta);
+    this.element = {
+      value: delta,
+      info: delta.toString(),
+      counter: counter,
+      deltaSum: deltaSumOld + delta,
+    };
   }
 
   log(element: Element) {
