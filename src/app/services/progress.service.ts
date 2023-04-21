@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Msg } from "./msg";
+import { Msg } from "../common/msg";
 import { IProgress } from "./i-progress";
 import { ProgressFactory } from "./impl/progress-factory";
 

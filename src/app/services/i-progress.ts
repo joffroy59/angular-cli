@@ -1,4 +1,4 @@
-import { Msg } from "./msg";
+import { Msg } from "../common/msg";
 
 export interface IProgress {
   next(info: Msg): Msg;

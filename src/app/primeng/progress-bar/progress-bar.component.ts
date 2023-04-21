@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { Msg } from "src/app/common/msg";
 import { ProgressService } from "../../services/progress.service";
 
 @Component({
@@ -17,20 +18,19 @@ export class PrimengProgressBarComponent implements OnInit {
 
   @Input() serviceType: string = "";
 
-  value: number = 0;
-  full: boolean = false;
-  info: string = "";
-  counter: number = 10;
+  fullfill: boolean = false;
+  msg: Msg = new Msg();
 
   getProgress(): number {
     this.progressService.tick();
-    this.setInfo();
+    this.resetInfo();
     return this.progressService.getProgress();
   }
 
-  setInfo(): void {
-    this.info = this.progressService.geInfo();
-    this.counter = this.progressService.getCounter();
+  resetInfo(): void {
+    this.msg.info = this.progressService.geInfo();
+    this.msg.counter = this.progressService.getCounter();
+    this.msg.value = 0;
   }
 
   toString(): string {
@@ -41,27 +41,34 @@ export class PrimengProgressBarComponent implements OnInit {
     return "[" + res.slice(0, -1) + "]";
   }
 
-  ngOnInit() {
+  init(): void {
     this.progressService = new ProgressService();
     this.progressService.setType(this.serviceType);
-    this.progressService.reset();
-    this.info = this.progressService.geInfo();
-    this.counter = this.progressService.getCounter();
+    this.msg.info = this.progressService.geInfo();
+    this.msg.counter = this.progressService.getCounter();
+  }
 
-    let interval = setInterval(() => {
-      if (!this.full) this.value = this.value + this.getProgress();
-      console.log(this.toString() + "=" + this.value);
-      if (this.value > 100) {
-        this.value = 100;
-        this.full = true;
-      } else if (this.value == 100) {
-        this.progressService.reset();
-        this.info = this.progressService.geInfo();
-        this.counter = this.progressService.getCounter();
-        this.value = 0;
-        this.full = false;
-      }
-      //}, 2000);
-    }, 4000);
+  checkLimit(): void {
+    let progressBarMax = 100;
+    if (this.msg.value > progressBarMax) {
+      this.msg.value = progressBarMax;
+      this.fullfill = true;
+    } else if (this.msg.value == progressBarMax) {
+      this.progressService.reset();
+      this.resetInfo();
+      this.msg.value = 0;
+      this.fullfill = false;
+    }
+  }
+
+  ngOnInit() {
+    this.init();
+
+    setInterval(() => {
+      if (!this.fullfill) this.msg.value = this.msg.value + this.getProgress();
+      console.log(this.toString() + "=" + this.msg.value);
+      this.checkLimit();
+    }, 2000);
+    //}, 4000);
   }
 }

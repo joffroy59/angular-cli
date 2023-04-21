@@ -1,4 +1,4 @@
-import { Msg } from "../msg";
+import { Msg } from "../../common/msg";
 import { IProgress } from "../i-progress";
 
 export class BigNumberImpl implements IProgress {
