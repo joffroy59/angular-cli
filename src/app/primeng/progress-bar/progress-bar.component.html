@@ -5,8 +5,11 @@
         <div class="bg-blue-100 w-12rem m-3 border-round">
             {{title3}} <p-progressBar [value]="msg.value"></p-progressBar>
         </div>
-        <div>
-           {{msg.value}} % &nbsp;&nbsp;&nbsp; {{ msg.info }}&nbsp;&nbsp;&nbsp; {{ msg.counter }}
-        </div>
+        <div class="w-12rem align-items-center justify-content-center">
+          <div class="mx-3 bg-blue-700 border-round font-bold p-3 flex align-items-center justify-content-center">
+            {{msg.value}} % &nbsp;&nbsp;&nbsp; {{ msg.info }}&nbsp;&nbsp;&nbsp; {{ msg.counter }}
+          </div>
+            
+        </div>          
     </div>
 </div>
