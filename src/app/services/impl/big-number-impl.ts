@@ -1,18 +1,23 @@
 import { Msg } from "../../common/msg";
 import { IProgress } from "../i-progress";
+import { LogService } from "../log.service";
 
 export class BigNumberImpl implements IProgress {
+  constructor() {}
+
+  private logger: LogService = new LogService();
+
   //_bigNumberStart: number = 6791;
   _bigNumberStart: number = 1200;
 
   getNextCounter(info: Msg, delta: number): number {
-    this.log(info);
-    console.log("delta:" + delta);
+    this.debug(info);
+    this.logger.debug("delta:" + delta);
 
     let result = Math.floor(
       (1 - Math.min(info.deltaSum + delta, 100) / 100) * this._bigNumberStart
     );
-    console.log("result=" + result);
+    this.logger.debug("result=" + result);
 
     return result;
   }
@@ -22,7 +27,7 @@ export class BigNumberImpl implements IProgress {
   }
 
   next(info: Msg): Msg {
-    console.log("impl_bigNumber");
+    this.logger.debug("impl_bigNumber");
     let delta = Math.floor(Math.random() * 30) + 1;
     let deltaSumOld = info.deltaSum;
 
@@ -36,17 +41,17 @@ export class BigNumberImpl implements IProgress {
   }
 
   reset(info: Msg) {
-    console.log("reset");
+    this.logger.debug("reset");
     info.value = 0;
     info.info = "0";
     info.counter = this.getResetCounter();
     info.deltaSum = 0;
   }
 
-  log(info: Msg) {
-    console.log("val=" + info.value);
-    console.log("info=" + info.info);
-    console.log("counter=" + info.counter);
-    console.log("deltaSum=" + info.deltaSum);
+  debug(info: Msg) {
+    this.logger.debug("val=" + info.value);
+    this.logger.debug("info=" + info.info);
+    this.logger.debug("counter=" + info.counter);
+    this.logger.debug("deltaSum=" + info.deltaSum);
   }
 }

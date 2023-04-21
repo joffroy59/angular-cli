@@ -1,13 +1,16 @@
 import { Msg } from "../../common/msg";
+import { LogService } from "../log.service";
 
 export class RandomImpl {
   factor: number;
+  private logger: LogService = new LogService();
+
   constructor(factor: number) {
     this.factor = factor;
   }
 
   next(info: Msg): Msg {
-    console.log("impl_ramdon_" + this.factor);
+    this.logger.debug("impl_ramdon_" + this.factor);
     let value = Math.floor(Math.random() * this.factor) + 1;
     let deltaSumOld = info.deltaSum;
     return {
@@ -19,7 +22,7 @@ export class RandomImpl {
   }
 
   reset(info: Msg) {
-    console.log("reset");
+    this.logger.debug("reset");
     info.value = 0;
     info.info = "0";
     info.counter = 0;

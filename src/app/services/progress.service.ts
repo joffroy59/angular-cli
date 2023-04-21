@@ -21,9 +21,7 @@ export class ProgressService {
   setType(type: string) {
     this.serviceType = type;
     this.progressImpl = this.progressFactory.get(this.serviceType);
-    console.log("Set type to " + this.serviceType);
-
-    this.logger.log("Set type to " + this.serviceType);
+    this.logger.debug("Set type to " + this.serviceType);
   }
 
   getProgress(): number {

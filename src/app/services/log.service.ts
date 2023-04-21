@@ -4,7 +4,7 @@ import { LogLevel } from "./log-level";
 
 @Injectable()
 export class LogService {
-  level: LogLevel = LogLevel.All;
+  level: LogLevel = LogLevel.Info;
   logWithDate: boolean = true;
 
   debug(msg: string, ...optionalParams: any[]) {

@@ -68,7 +68,7 @@ export class PrimengProgressBarComponent implements OnInit {
 
     setInterval(() => {
       if (!this.fullfill) this.msg.value = this.msg.value + this.getProgress();
-      console.log(this.toString() + "=" + this.msg.value);
+      this.logger.debug(this.toString() + "=" + this.msg.value);
       this.checkLimit();
     }, 2000);
     //}, 4000);
