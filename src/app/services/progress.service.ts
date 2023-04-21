@@ -9,12 +9,7 @@ import { RandomImpl } from "./impl/random-impl";
 })
 export class ProgressService {
   constructor() {
-    this.msg = {
-      value: 0,
-      info: "",
-      counter: 0,
-      deltaSum: 0,
-    };
+    this.msg = new IMsg();
   }
 
   msg: IMsg;
