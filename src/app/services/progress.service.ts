@@ -18,38 +18,38 @@ export class ProgressService {
     };
   }
 
-  _impl: any;
   info: Info;
 
   bigNumberImpl: BigNumberImpl;
-
   ramdon10Impl: IProgress = new RandomImpl(10);
-  ramdon30Impl: IProgress = new RandomImpl(10);
-  ramdon50Impl: IProgress = new RandomImpl(10);
-  ramdon100Impl: IProgress = new RandomImpl(10);
+  ramdon30Impl: IProgress = new RandomImpl(30);
+  ramdon50Impl: IProgress = new RandomImpl(50);
+  ramdon100Impl: IProgress = new RandomImpl(100);
+
+  progressImpl: IProgress;
 
   serviceType: string = "random30";
 
   setType(type: string) {
     this.serviceType = type;
-    this._impl = this.impl_ramdon_30;
+    this.progressImpl = this.ramdon30Impl;
     console.log("Set type to " + this.serviceType);
 
     switch (this.serviceType) {
       case "random10":
-        this._impl = this.impl_ramdon_10;
+        this.progressImpl = this.ramdon10Impl;
         break;
       case "random30":
-        this._impl = this.impl_ramdon_30;
+        this.progressImpl = this.ramdon30Impl;
         break;
       case "random50":
-        this._impl = this.impl_ramdon_50;
+        this.progressImpl = this.ramdon50Impl;
         break;
       case "random100":
-        this._impl = this.impl_ramdon_100;
+        this.progressImpl = this.ramdon100Impl;
         break;
       case "bigNumber":
-        this._impl = this.impl_bigNumber;
+        this.progressImpl = this.bigNumberImpl;
         break;
     }
   }
@@ -59,7 +59,7 @@ export class ProgressService {
   }
 
   tick(): void {
-    this._impl();
+    this.info = this.progressImpl.next(this.info);
   }
 
   geInfo(): string {
@@ -80,22 +80,5 @@ export class ProgressService {
       this.info.counter = 0;
     }
     this.info.deltaSum = 0;
-  }
-
-  impl_ramdon_10(): void {
-    this.info = this.ramdon10Impl.next(this.info);
-  }
-  impl_ramdon_30(): void {
-    this.info = this.ramdon30Impl.next(this.info);
-  }
-  impl_ramdon_50(): void {
-    this.info = this.ramdon50Impl.next(this.info);
-  }
-  impl_ramdon_100(): void {
-    this.info = this.ramdon100Impl.next(this.info);
-  }
-
-  impl_bigNumber(): void {
-    this.info = this.bigNumberImpl.next(this.info);
   }
 }
