@@ -12,16 +12,19 @@ interface Element {
 })
 export class ProgressService {
   constructor() {
+    this.bigNumberImpl = new BigNumberImpl();
     this.element = {
       value: 0,
       info: "",
-      counter: this._bigNumberStart,
+      counter: this.bigNumberImpl.getResetCounter(),
       deltaSum: 0,
     };
   }
 
   _impl: any;
   element: Element;
+
+  bigNumberImpl: BigNumberImpl;
 
   serviceType: string = "random30";
 
@@ -70,7 +73,7 @@ export class ProgressService {
     this.element.value = 0;
     this.element.info = "0";
     if (this.serviceType == "bigNumber") {
-      this.element.counter = this._bigNumberStart;
+      this.element.counter = this.bigNumberImpl.getResetCounter();
     } else {
       this.element.counter = 0;
     }
@@ -101,56 +104,52 @@ export class ProgressService {
     this.impl_ramdon_x(100);
   }
 
-  //_bigNumberStart: number = 6791;
-  _bigNumberStart: number = 1200;
   impl_bigNumber(): void {
     console.log("impl_bigNumber");
     let delta = Math.floor(Math.random() * 30) + 1;
     let deltaSumOld = this.element.deltaSum;
 
+    let counter = this.bigNumberImpl.getNextCounter(this.element, delta);
     this.element = {
       value: delta,
       info: delta.toString(),
-      counter: this.getNextCounter(delta),
+      counter: counter,
       deltaSum: deltaSumOld + delta,
     };
   }
 
-  getNextCounter(delta: number): number {
-    this.log(this.element);
+  log(element: Element) {
+    console.log("val=" + element.value);
+    console.log("info=" + element.info);
+    console.log("counter=" + element.counter);
+    console.log("deltaSum=" + element.deltaSum);
+  }
+}
+
+export class BigNumberImpl {
+  //_bigNumberStart: number = 6791;
+  _bigNumberStart: number = 1200;
+
+  getNextCounter(element: Element, delta: number): number {
+    this.log(element);
     console.log("delta:" + delta);
 
-    let tmp = this.element.deltaSum + delta;
-    console.log("this.element.deltaSum + delta=" + tmp);
-
-    console.log(
-      "Math.min(this.element.deltaSum + delta, 100)" + ":" + Math.min(tmp, 100)
-    );
-    console.log(
-      "Math.min(this.element.deltaSum + delta, 100)/100" +
-        ":" +
-        Math.min(tmp, 100) / 100
-    );
-    console.log(
-      "(1 - (Math.min(this.element.deltaSum + delta, 100)/100))" +
-        ":" +
-        (1 - Math.min(tmp, 100) / 100)
-    );
-    console.log(
-      "(1 - (Math.min(this.element.deltaSum + delta, 100)/100))  * this._bigNumberStart" +
-        ":" +
-        (1 - Math.min(tmp, 100) / 100) * this._bigNumberStart
-    );
-    let result = (1 - Math.min(tmp, 100) / 100) * this._bigNumberStart;
+    let result =
+      (1 - Math.min(element.deltaSum + delta, 100) / 100) *
+      this._bigNumberStart;
     console.log("result=" + result);
 
     return result;
   }
 
+  getResetCounter(): number {
+    return this._bigNumberStart;
+  }
+
   log(element: Element) {
-    console.log("val=" + this.element.value);
-    console.log("info=" + this.element.info);
-    console.log("counter=" + this.element.counter);
-    console.log("deltaSum=" + this.element.deltaSum);
+    console.log("val=" + element.value);
+    console.log("info=" + element.info);
+    console.log("counter=" + element.counter);
+    console.log("deltaSum=" + element.deltaSum);
   }
 }
