@@ -134,9 +134,9 @@ export class BigNumberImpl {
     this.log(element);
     console.log("delta:" + delta);
 
-    let result =
-      (1 - Math.min(element.deltaSum + delta, 100) / 100) *
-      this._bigNumberStart;
+    let result = Math.floor(
+      (1 - Math.min(element.deltaSum + delta, 100) / 100) * this._bigNumberStart
+    );
     console.log("result=" + result);
 
     return result;
