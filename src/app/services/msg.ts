@@ -1,4 +1,4 @@
-export class IMsg {
+export class Msg {
   value: number;
   info: string;
   counter: number;

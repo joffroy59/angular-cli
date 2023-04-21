@@ -1,46 +1,26 @@
 import { Injectable } from "@angular/core";
-import { IMsg } from "./i-msg";
+import { Msg } from "./msg";
 import { IProgress } from "./i-progress";
-import { BigNumberImpl } from "./impl/big-number-impl";
-import { RandomImpl } from "./impl/random-impl";
+import { ProgressFactory } from "./impl/progress-factory";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProgressService {
   constructor() {
-    this.msg = new IMsg();
+    this.msg = new Msg();
   }
 
-  msg: IMsg;
-
-  progressImpl: IProgress;
+  msg: Msg;
 
   serviceType: string = "random30";
+  progressFactory: ProgressFactory = new ProgressFactory();
+  progressImpl: IProgress;
 
   setType(type: string) {
     this.serviceType = type;
+    this.progressImpl = this.progressFactory.get(this.serviceType);
     console.log("Set type to " + this.serviceType);
-    switch (this.serviceType) {
-      case "random10":
-        this.progressImpl = new RandomImpl(10);
-        break;
-      case "random30":
-        this.progressImpl = new RandomImpl(30);
-        break;
-      case "random50":
-        this.progressImpl = new RandomImpl(50);
-        break;
-      case "random100":
-        this.progressImpl = new RandomImpl(100);
-        break;
-      case "bigNumber":
-        this.progressImpl = new BigNumberImpl();
-        break;
-      default:
-        this.progressImpl = new RandomImpl(30);
-        break;
-    }
   }
 
   getProgress(): number {
