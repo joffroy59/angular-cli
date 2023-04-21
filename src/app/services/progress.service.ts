@@ -1,13 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Component, Injectable } from "@angular/core";
 import { Msg } from "../common/msg";
 import { IProgress } from "./i-progress";
 import { ProgressFactory } from "./impl/progress-factory";
+import { LogService } from "./log.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProgressService {
-  constructor() {
+  constructor(private logger: LogService) {
     this.msg = new Msg();
   }
 
@@ -21,6 +22,8 @@ export class ProgressService {
     this.serviceType = type;
     this.progressImpl = this.progressFactory.get(this.serviceType);
     console.log("Set type to " + this.serviceType);
+
+    this.logger.log("Set type to " + this.serviceType);
   }
 
   getProgress(): number {

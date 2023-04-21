@@ -9,6 +9,8 @@ import { DemoPrimengButtonComponent } from "./demo/primeng-button/primeng-button
 import { DemoPrimengProgressBarComponent } from "./demo/primeng-progress-bar/primeng-progress-bar.component";
 import { DemoComponent } from "./demo/demo.component";
 
+import { LogService } from "./services/log.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,7 @@ import { DemoComponent } from "./demo/demo.component";
     DemoComponent,
   ],
   imports: [BrowserModule, SharedModule],
-  providers: [],
+  providers: [LogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

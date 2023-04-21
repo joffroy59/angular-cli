@@ -1,14 +1,16 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Msg } from "src/app/common/msg";
+import { Msg } from "../../common/msg";
+import { LogService } from "../../services/log.service";
 import { ProgressService } from "../../services/progress.service";
 
 @Component({
   selector: "app-primeng-progress-bar",
   templateUrl: "./progress-bar.component.html",
   styleUrls: ["./progress-bar.component.css"],
+  providers: [LogService],
 })
 export class PrimengProgressBarComponent implements OnInit {
-  constructor() {}
+  constructor(private logger: LogService) {}
 
   progressService: ProgressService;
 
@@ -42,7 +44,7 @@ export class PrimengProgressBarComponent implements OnInit {
   }
 
   init(): void {
-    this.progressService = new ProgressService();
+    this.progressService = new ProgressService(this.logger);
     this.progressService.setType(this.serviceType);
     this.msg.info = this.progressService.geInfo();
     this.msg.counter = this.progressService.getCounter();
