@@ -1,11 +1,5 @@
 import { Injectable } from "@angular/core";
-
-interface Element {
-  value: number;
-  info: string;
-  counter: number;
-  deltaSum: number;
-}
+import { Info } from "./info";
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +7,7 @@ interface Element {
 export class ProgressService {
   constructor() {
     this.bigNumberImpl = new BigNumberImpl();
-    this.element = {
+    this.info = {
       value: 0,
       info: "",
       counter: 0,
@@ -22,7 +16,7 @@ export class ProgressService {
   }
 
   _impl: any;
-  element: Element;
+  info: Info;
 
   bigNumberImpl: BigNumberImpl;
 
@@ -53,7 +47,7 @@ export class ProgressService {
   }
 
   getProgress(): number {
-    return this.element.value;
+    return this.info.value;
   }
 
   tick(): void {
@@ -61,30 +55,30 @@ export class ProgressService {
   }
 
   geInfo(): string {
-    return this.element.info;
+    return this.info.info;
   }
 
   getCounter(): number {
-    return this.element.counter;
+    return this.info.counter;
   }
 
   reset() {
     console.log("reset");
-    this.element.value = 0;
-    this.element.info = "0";
+    this.info.value = 0;
+    this.info.info = "0";
     if (this.serviceType == "bigNumber") {
-      this.element.counter = this.bigNumberImpl.getResetCounter();
+      this.info.counter = this.bigNumberImpl.getResetCounter();
     } else {
-      this.element.counter = 0;
+      this.info.counter = 0;
     }
-    this.element.deltaSum = 0;
+    this.info.deltaSum = 0;
   }
 
   impl_ramdon_x(factor: number): void {
     console.log("impl_ramdon_" + factor);
     let value = Math.floor(Math.random() * factor) + 1;
-    let deltaSumOld = this.element.deltaSum;
-    this.element = {
+    let deltaSumOld = this.info.deltaSum;
+    this.info = {
       info: value.toString(),
       value: value,
       counter: value,
@@ -106,14 +100,14 @@ export class ProgressService {
   }
 
   impl_bigNumber(): void {
-    this.element = this.bigNumberImpl.next(this.element);
+    this.info = this.bigNumberImpl.next(this.info);
   }
 
-  log(element: Element) {
-    console.log("val=" + element.value);
-    console.log("info=" + element.info);
-    console.log("counter=" + element.counter);
-    console.log("deltaSum=" + element.deltaSum);
+  log(info: Info) {
+    console.log("val=" + info.value);
+    console.log("info=" + info.info);
+    console.log("counter=" + info.counter);
+    console.log("deltaSum=" + info.deltaSum);
   }
 }
 
@@ -121,12 +115,12 @@ export class BigNumberImpl {
   //_bigNumberStart: number = 6791;
   _bigNumberStart: number = 1200;
 
-  getNextCounter(element: Element, delta: number): number {
-    this.log(element);
+  getNextCounter(info: Info, delta: number): number {
+    this.log(info);
     console.log("delta:" + delta);
 
     let result = Math.floor(
-      (1 - Math.min(element.deltaSum + delta, 100) / 100) * this._bigNumberStart
+      (1 - Math.min(info.deltaSum + delta, 100) / 100) * this._bigNumberStart
     );
     console.log("result=" + result);
 
@@ -137,12 +131,12 @@ export class BigNumberImpl {
     return this._bigNumberStart;
   }
 
-  next(element: Element): Element {
+  next(info: Info): Info {
     console.log("impl_bigNumber");
     let delta = Math.floor(Math.random() * 30) + 1;
-    let deltaSumOld = element.deltaSum;
+    let deltaSumOld = info.deltaSum;
 
-    let counter = this.getNextCounter(element, delta);
+    let counter = this.getNextCounter(info, delta);
     return {
       value: delta,
       info: delta.toString(),
@@ -151,10 +145,10 @@ export class BigNumberImpl {
     };
   }
 
-  log(element: Element) {
-    console.log("val=" + element.value);
-    console.log("info=" + element.info);
-    console.log("counter=" + element.counter);
-    console.log("deltaSum=" + element.deltaSum);
+  log(info: Info) {
+    console.log("val=" + info.value);
+    console.log("info=" + info.info);
+    console.log("counter=" + info.counter);
+    console.log("deltaSum=" + info.deltaSum);
   }
 }
