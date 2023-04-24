@@ -1,7 +1,8 @@
 import { Msg } from "../../common/msg";
+import { IProgress } from "../i-progress";
 import { LogService } from "../log.service";
 
-export class RandomImpl {
+export class RandomImpl implements IProgress {
   factor: number;
   private logger: LogService = new LogService();
 
